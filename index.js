@@ -54,7 +54,10 @@ function Overlay(options) {
   this.el = o(tmpl);
   if ('body' == this.target) this.el.addClass('fixed');
   this.el.appendTo(this.target);
-  if (this.closable) this.el.on('click', this.hide.bind(this));
+  if (this.closable) {
+    this.el.on('click', this.hide.bind(this));
+    this.el.addClass('closable');
+  }
 }
 
 /**
