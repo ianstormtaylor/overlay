@@ -109,3 +109,28 @@ Overlay.prototype.remove = function(){
   return this;
 };
 
+/**
+ * Add a class to the overlay.
+ *
+ * @param {String} name
+ * @return {Overlay}
+ * @api public
+ */
+
+Overlay.prototype.addClass = function(name){
+  this.el.addClass(name);
+  return this;
+};
+
+/**
+ * Remove a class from the overlay.
+ *
+ * @param {String} name
+ * @return {Overlay}
+ * @api public
+ */
+
+Overlay.prototype.removeClass = function(name){
+  this.el.removeClass(name);
+  return this;
+};
