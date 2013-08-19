@@ -4,6 +4,7 @@
  */
 
 var Emitter = require('emitter');
+var escape = require('on-escape');
 var after = require('after-transition');
 var tmpl = require('./template');
 var o = require('dom');
@@ -49,13 +50,15 @@ function overlay(options){
 function Overlay(options) {
   Emitter.call(this);
   options = options || {};
+  this.hidden = true;
   this.target = options.target || 'body';
   this.closable = options.closable;
   this.el = o(tmpl);
   if ('body' == this.target) this.el.addClass('fixed');
   this.el.appendTo(this.target);
-  if (this.closable) {
-    this.el.on('click', this.hide.bind(this));
+  this.hide = this.hide.bind(this);
+    this.el.on('click', this.hide);
+    escape(this.hide);
     this.el.addClass('closable');
   }
 }
@@ -78,6 +81,7 @@ Emitter(Overlay.prototype);
 Overlay.prototype.show = function(){
   this.emit('show');
   this.el.removeClass('hidden');
+  this.hidden = false;
   return this;
 };
 
@@ -91,7 +95,10 @@ Overlay.prototype.show = function(){
  */
 
 Overlay.prototype.hide = function(){
+  if (this.hidden) return this;
   this.emit('hide');
+  this.hidden = true;
+  escape.unbind(this.hide);
   return this.remove();
 };
 
