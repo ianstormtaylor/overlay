@@ -57,6 +57,7 @@ function Overlay(options) {
   if ('body' == this.target) this.el.addClass('fixed');
   this.el.appendTo(this.target);
   this.hide = this.hide.bind(this);
+  if (this.closable) {
     this.el.on('click', this.hide);
     escape(this.hide);
     this.el.addClass('closable');
